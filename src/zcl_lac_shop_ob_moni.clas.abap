@@ -56,7 +56,6 @@ CLASS ZCL_LAC_SHOP_OB_MONI IMPLEMENTATION.
   METHOD CREATE_HEADER_SECTION.
 
     DATA: lo_header_container TYPE REF TO cl_gui_container,
-          lo_header_salv      TYPE REF TO cl_salv_table,
           lt_header_display   TYPE zlac_shop_ib_moni_hdr_disp_tab.
 
     lo_header_container = mo_screen_helper->create_screen_container(
@@ -65,7 +64,7 @@ CLASS ZCL_LAC_SHOP_OB_MONI IMPLEMENTATION.
       iv_height   = 80 ##NUMBER_OK
     ).
 
-    lo_header_salv = mo_screen_helper->create_salv_container(
+    mo_screen_helper->create_salv_container(
       io_container = lo_header_container
       it_data      = lt_header_display
     ).
