@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>ZCL_LAC_SHOP_OB_MONI</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>Shop: Inbound Monitor</DESCRIPT>
+    <DESCRIPT>Shop: Outbound Monitor</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>
@@ -23,7 +23,7 @@
      <CLSNAME>ZCL_LAC_SHOP_OB_MONI</CLSNAME>
      <CMPNAME>MO_SCREEN_HELPER</CMPNAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Shop: Outbound Monitor Helper</DESCRIPT>
+     <DESCRIPT>Shop: Interface Monitor Helper</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CLSNAME>ZCL_LAC_SHOP_OB_MONI</CLSNAME>

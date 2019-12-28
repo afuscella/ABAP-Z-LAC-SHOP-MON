@@ -1,4 +1,4 @@
-CLASS ltc DEFINITION INHERITING FROM ztc_lac_shop_ib_moni
+CLASS ltc DEFINITION INHERITING FROM ztc_lac_shop_ob_moni
           FOR TESTING
           DURATION SHORT
           RISK LEVEL HARMLESS

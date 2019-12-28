@@ -4,35 +4,17 @@ class ZCL_LAC_SHOP_OB_MONI_HELPER definition
 
 public section.
 
+  interfaces ZIF_LAC_SHOP_MONI_HELPER .
+
   methods CONSTRUCTOR
     importing
-      !IO_GUI_WRAP type ref to ZCA_LAC_GUI_WRAP optional
-      !IO_SALV_WRAP type ref to ZCA_LAC_SALV_WRAP optional .
-  methods CREATE_SCREEN_SPLITTER
-    returning
-      value(RO_CONTAINER) type ref to CL_GUI_SPLITTER_CONTAINER
-    raising
-      ZCX_LAC_OBJ_CREATION .
-  methods CREATE_SCREEN_CONTAINER
-    importing
-      !IO_SPLITTER type ref to CL_GUI_SPLITTER_CONTAINER
-      !IV_ROW type I
-      !IV_HEIGHT type I
-    returning
-      value(RO_CONTAINER) type ref to CL_GUI_CONTAINER .
-  methods CREATE_SALV_CONTAINER
-    importing
-      !IO_CONTAINER type ref to CL_GUI_CONTAINER
-      !IT_DATA type STANDARD TABLE
-    returning
-      value(RO_SALV_TABLE) type ref to CL_SALV_TABLE
-    raising
-      CX_SALV_ERROR .
+      !IO_GUI_WRAP type ref to ZIF_LAC_GUI_WRAP optional
+      !IO_SALV_WRAP type ref to ZIF_LAC_SALV_WRAP optional .
   PROTECTED SECTION.
 private section.
 
-  data MO_GUI_WRAP type ref to ZCA_LAC_GUI_WRAP .
-  data MO_SALV_WRAP type ref to ZCA_LAC_SALV_WRAP .
+  data MO_GUI_WRAP type ref to ZIF_LAC_GUI_WRAP .
+  data MO_SALV_WRAP type ref to ZIF_LAC_SALV_WRAP .
 ENDCLASS.
 
 
@@ -40,7 +22,7 @@ ENDCLASS.
 CLASS ZCL_LAC_SHOP_OB_MONI_HELPER IMPLEMENTATION.
 
 
-  METHOD CONSTRUCTOR.
+  METHOD constructor.
 
     IF io_gui_wrap IS BOUND.
       mo_gui_wrap = io_gui_wrap.
@@ -57,7 +39,7 @@ CLASS ZCL_LAC_SHOP_OB_MONI_HELPER IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD CREATE_SALV_CONTAINER.
+  METHOD zif_lac_shop_moni_helper~create_salv_container.
 
     DATA lv_download TYPE string.
 
@@ -85,27 +67,23 @@ CLASS ZCL_LAC_SHOP_OB_MONI_HELPER IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD CREATE_SCREEN_CONTAINER.
+  METHOD zif_lac_shop_moni_helper~create_screen_container.
 
     ro_container = mo_gui_wrap->get_splitter_container(
       io_splitter = io_splitter
       iv_row      = iv_row
     ).
 
-    TRY .
-        mo_gui_wrap->set_splitter_row_height(
-          io_splitter = io_splitter
-          iv_id       = iv_row
-          iv_height   = iv_height
-        ).
-
-      CATCH zcx_lac_obj_modify_attribute ##NO_HANDLER.
-    ENDTRY.
+    mo_gui_wrap->set_splitter_row_height(
+      io_splitter = io_splitter
+      iv_id       = iv_row
+      iv_height   = iv_height
+    ).
 
   ENDMETHOD.
 
 
-  METHOD CREATE_SCREEN_SPLITTER.
+  METHOD zif_lac_shop_moni_helper~create_screen_splitter.
 
     DATA lo_container TYPE REF TO cl_gui_container.
 

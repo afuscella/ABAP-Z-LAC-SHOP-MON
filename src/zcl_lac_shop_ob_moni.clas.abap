@@ -9,8 +9,8 @@ public section.
   methods CONSTRUCTOR
     importing
       !IS_SELECTION_FIELDS type ZLAC_SHOP_IB_MONI_SELECTION optional
-      !IO_SCREEN_HELPER type ref to ZCL_LAC_SHOP_OB_MONI_HELPER optional
-      !IO_SALV_WRAP type ref to ZCA_LAC_SALV_WRAP optional
+      !IO_SCREEN_HELPER type ref to ZIF_LAC_SHOP_MONI_HELPER optional
+      !IO_SALV_WRAP type ref to ZIF_LAC_SALV_WRAP optional
       !IO_SPLITTER type ref to CL_GUI_CONTAINER optional .
 
   methods ZIF_LAC_REPORT~FINALIZE
@@ -20,7 +20,7 @@ public section.
   PROTECTED SECTION.
 private section.
 
-  data MO_SCREEN_HELPER type ref to ZCL_LAC_SHOP_OB_MONI_HELPER .
+  data MO_SCREEN_HELPER type ref to ZIF_LAC_SHOP_MONI_HELPER .
   data MS_SELECTION_FIELDS type ZLAC_SHOP_IB_MONI_SELECTION  ##NEEDED.
 
   methods CREATE_HEADER_SECTION
@@ -47,7 +47,7 @@ CLASS ZCL_LAC_SHOP_OB_MONI IMPLEMENTATION.
     IF io_screen_helper IS BOUND.
       mo_screen_helper = io_screen_helper.
     ELSE.
-      CREATE OBJECT mo_screen_helper.
+      CREATE OBJECT mo_screen_helper TYPE zcl_lac_shop_ob_moni_helper.
     ENDIF.
 
   ENDMETHOD.
@@ -72,7 +72,7 @@ CLASS ZCL_LAC_SHOP_OB_MONI IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD CREATE_ITEMS_SECTION.
+  METHOD create_items_section.
 
     DATA: lo_items_container TYPE REF TO cl_gui_container,
           lo_items_salv      TYPE REF TO cl_salv_table,
