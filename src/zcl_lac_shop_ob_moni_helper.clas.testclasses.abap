@@ -1,0 +1,10 @@
+CLASS ltc DEFINITION INHERITING FROM ztc_lac_shop_ob_moni_helper
+          FOR TESTING
+          RISK LEVEL HARMLESS
+          DURATION SHORT
+          FINAL.
+  "@JIRA-KEY
+ENDCLASS.
+
+CLASS ltc IMPLEMENTATION.
+ENDCLASS.
