@@ -6,3 +6,4 @@ ABAP: Latin America Countries Shop Monitor App
 |  Program                    |      _What is used for ... ?_                                                            |
 | --------------------------- |------------------------------------------------------------------------------------------| 
 | ZLAC_SHOP_INBOUND_MONITOR   | Shopping Cart Inbound Monitor                                                            |
+| ZLAC_SHOP_OUTBOUND_MONITOR  | Shopping Cart Outbound Monitor                                                           |
