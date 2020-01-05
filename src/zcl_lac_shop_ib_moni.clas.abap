@@ -56,7 +56,7 @@ CLASS ZCL_LAC_SHOP_IB_MONI IMPLEMENTATION.
   METHOD create_header_section.
 
     DATA: lo_header_container TYPE REF TO cl_gui_container,
-          lo_header_salv      TYPE REF TO cl_salv_table,
+          lo_header_salv      TYPE REF TO cl_salv_table ##NEEDED,
           lt_header_display   TYPE zlac_shop_ib_moni_hdr_disp_tab.
 
     lo_header_container = mo_screen_helper->create_screen_container(
@@ -76,7 +76,7 @@ CLASS ZCL_LAC_SHOP_IB_MONI IMPLEMENTATION.
   METHOD create_items_section.
 
     DATA: lo_items_container TYPE REF TO cl_gui_container,
-          lo_items_salv      TYPE REF TO cl_salv_table,
+          lo_items_salv      TYPE REF TO cl_salv_table ##NEEDED,
           lt_items_display   TYPE zlac_shop_ib_moni_hdr_disp_tab.
 
     lo_items_container = mo_screen_helper->create_screen_container(
