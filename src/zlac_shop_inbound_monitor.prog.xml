@@ -82,6 +82,7 @@
    <CUA>
     <ADM>
      <ACTCODE>000001</ACTCODE>
+     <MENCODE>000021</MENCODE>
      <PFKCODE>000001</PFKCODE>
     </ADM>
     <STA>
@@ -98,6 +99,7 @@
      <RSMPE_FUNT>
       <CODE>BACK</CODE>
       <TEXTNO>001</TEXTNO>
+      <TYPE>E</TYPE>
       <TEXT_TYPE>S</TEXT_TYPE>
       <FUN_TEXT>Back</FUN_TEXT>
       <PATH>B</PATH>
@@ -115,6 +117,7 @@
      <RSMPE_FUNT>
       <CODE>CANCEL</CODE>
       <TEXTNO>001</TEXTNO>
+      <TYPE>E</TYPE>
       <TEXT_TYPE>S</TEXT_TYPE>
       <TEXT_NAME>ICON_CANCEL</TEXT_NAME>
       <ICON_ID>@0W@</ICON_ID>
@@ -123,11 +126,58 @@
      <RSMPE_FUNT>
       <CODE>EXIT</CODE>
       <TEXTNO>001</TEXTNO>
+      <TYPE>E</TYPE>
       <TEXT_TYPE>S</TEXT_TYPE>
       <FUN_TEXT>Exit</FUN_TEXT>
       <PATH>X</PATH>
      </RSMPE_FUNT>
     </FUN>
+    <MEN>
+     <RSMPE_MEN>
+      <CODE>000012</CODE>
+      <NO>01</NO>
+      <REF_TYPE>F</REF_TYPE>
+      <REF_CODE>CANC</REF_CODE>
+      <REF_NO>001</REF_NO>
+     </RSMPE_MEN>
+    </MEN>
+    <MTX>
+     <RSMPE_MNLT>
+      <CODE>000012</CODE>
+      <TEXT_TYPE>S</TEXT_TYPE>
+      <TEXT>Edit</TEXT>
+      <PATH>E</PATH>
+      <INT_NOTE>Standard Supplement</INT_NOTE>
+     </RSMPE_MNLT>
+     <RSMPE_MNLT>
+      <CODE>000013</CODE>
+      <TEXT_TYPE>S</TEXT_TYPE>
+      <TEXT>Goto</TEXT>
+      <PATH>G</PATH>
+      <INT_NOTE>Standard Supplement</INT_NOTE>
+     </RSMPE_MNLT>
+     <RSMPE_MNLT>
+      <CODE>000016</CODE>
+      <TEXT_TYPE>S</TEXT_TYPE>
+      <TEXT>Edit</TEXT>
+      <PATH>E</PATH>
+      <INT_NOTE>Standard Supplement</INT_NOTE>
+     </RSMPE_MNLT>
+     <RSMPE_MNLT>
+      <CODE>000019</CODE>
+      <TEXT_TYPE>S</TEXT_TYPE>
+      <TEXT>Edit</TEXT>
+      <PATH>E</PATH>
+      <INT_NOTE>Standard Supplement</INT_NOTE>
+     </RSMPE_MNLT>
+    </MTX>
+    <ACT>
+     <RSMPE_ACT>
+      <CODE>000001</CODE>
+      <NO>01</NO>
+      <MENUCODE>000012</MENUCODE>
+     </RSMPE_ACT>
+    </ACT>
     <PFK>
      <RSMPE_PFK>
       <CODE>000001</CODE>
@@ -149,10 +199,6 @@
      </RSMPE_PFK>
     </PFK>
     <SET>
-     <RSMPE_STAF>
-      <STATUS>0100</STATUS>
-      <FUNCTION>BACK</FUNCTION>
-     </RSMPE_STAF>
      <RSMPE_STAF>
       <STATUS>0100</STATUS>
       <FUNCTION>CANC</FUNCTION>
@@ -190,15 +236,15 @@
     <TIT>
      <RSMPE_TITT>
       <CODE>0100</CODE>
-      <TEXT>Shopping Cart Monitor</TEXT>
+      <TEXT>Shopping Cart Inbound Monitor</TEXT>
      </RSMPE_TITT>
     </TIT>
    </CUA>
    <TPOOL>
     <item>
      <ID>R</ID>
-     <ENTRY>Shopping Cart Monitor</ENTRY>
-     <LENGTH>22</LENGTH>
+     <ENTRY>Shopping Cart Inbound Monitor</ENTRY>
+     <LENGTH>29</LENGTH>
     </item>
    </TPOOL>
   </asx:values>
