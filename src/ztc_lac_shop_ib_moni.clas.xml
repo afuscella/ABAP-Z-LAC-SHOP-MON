@@ -25,13 +25,13 @@
      <CLSNAME>ZTC_LAC_SHOP_IB_MONI</CLSNAME>
      <CMPNAME>MO_SALV_WRAP_DOUBLE</CMPNAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Test Double: SALV Wrapper</DESCRIPT>
+     <DESCRIPT>Test Double: LAC SALV Wrapper</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CLSNAME>ZTC_LAC_SHOP_IB_MONI</CLSNAME>
      <CMPNAME>MO_SCREEN_HELPER_DOUBLE</CMPNAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Test Double: Inbound Monitor Helper</DESCRIPT>
+     <DESCRIPT>Test Double: Interface Monitor Helper</DESCRIPT>
     </SEOCOMPOTX>
    </DESCRIPTIONS>
   </asx:values>

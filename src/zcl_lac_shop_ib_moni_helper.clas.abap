@@ -4,30 +4,17 @@ class ZCL_LAC_SHOP_IB_MONI_HELPER definition
 
 public section.
 
+  interfaces ZIF_LAC_SHOP_MONI_HELPER .
+
   methods CONSTRUCTOR
     importing
-      !IO_GUI_WRAP type ref to ZCA_LAC_GUI_WRAP optional
-      !IO_SALV_WRAP type ref to ZCA_LAC_SALV_WRAP optional .
-  methods CREATE_SALV
-    importing
-      !IO_SPLITTER type ref to CL_GUI_SPLITTER_CONTAINER
-      !IV_ROW type I
-      !IV_HEIGHT type I
-    returning
-      value(RO_SALV) type ref to CL_SALV_TABLE
-    raising
-      CX_SALV_MSG
-      ZCX_LAC_OBJ_MODIFY_ATTRIBUTE .
-  methods CREATE_SPLITTER_CONTAINER
-    returning
-      value(RO_CONTAINER) type ref to CL_GUI_SPLITTER_CONTAINER
-    raising
-      ZCX_LAC_OBJ_CREATION .
+      !IO_GUI_WRAP type ref to ZIF_LAC_GUI_WRAP optional
+      !IO_SALV_WRAP type ref to ZIF_LAC_SALV_WRAP optional .
   PROTECTED SECTION.
-  PRIVATE SECTION.
+private section.
 
-    DATA mo_gui_wrap TYPE REF TO zca_lac_gui_wrap .
-    DATA mo_salv_wrap TYPE REF TO zca_lac_salv_wrap .
+  data MO_GUI_WRAP type ref to ZIF_LAC_GUI_WRAP .
+  data MO_SALV_WRAP type ref to ZIF_LAC_SALV_WRAP .
 ENDCLASS.
 
 
@@ -35,7 +22,7 @@ ENDCLASS.
 CLASS ZCL_LAC_SHOP_IB_MONI_HELPER IMPLEMENTATION.
 
 
-  METHOD CONSTRUCTOR.
+  METHOD constructor.
 
     IF io_gui_wrap IS BOUND.
       mo_gui_wrap = io_gui_wrap.
@@ -52,12 +39,37 @@ CLASS ZCL_LAC_SHOP_IB_MONI_HELPER IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD CREATE_SALV.
+  METHOD zif_lac_shop_moni_helper~create_salv_container.
 
-    DATA: lo_container TYPE REF TO cl_gui_container,
-          lt_data      TYPE zlac_shop_ib_moni_display_tab.
+    DATA lv_download TYPE string.
 
-    lo_container = mo_gui_wrap->get_splitter_container(
+    lv_download = TEXT-s00.
+
+    ro_salv_table = mo_salv_wrap->create_salv_table(
+      io_container = io_container
+      it_data      = it_data ).
+
+    mo_salv_wrap->set_default_functions( ro_salv_table ).
+
+    mo_salv_wrap->add_function(
+      io_salv     = ro_salv_table
+      iv_name     = 'BUTTON'
+      iv_icon     = '@FT@'
+      iv_text     = lv_download
+      iv_tooltip  = lv_download
+      iv_position = if_salv_c_function_position=>right_of_salv_functions
+    ).
+
+    mo_salv_wrap->set_optimize_columns( ro_salv_table ).
+
+    mo_salv_wrap->display( ro_salv_table ).
+
+  ENDMETHOD.
+
+
+  METHOD zif_lac_shop_moni_helper~create_screen_container.
+
+    ro_container = mo_gui_wrap->get_splitter_container(
       io_splitter = io_splitter
       iv_row      = iv_row
     ).
@@ -68,15 +80,10 @@ CLASS ZCL_LAC_SHOP_IB_MONI_HELPER IMPLEMENTATION.
       iv_height   = iv_height
     ).
 
-    ro_salv = mo_salv_wrap->create_salv_table(
-      io_container = lo_container
-      it_data      = lt_data
-    ).
-
   ENDMETHOD.
 
 
-  METHOD CREATE_SPLITTER_CONTAINER.
+  METHOD zif_lac_shop_moni_helper~create_screen_splitter.
 
     DATA lo_container TYPE REF TO cl_gui_container.
 

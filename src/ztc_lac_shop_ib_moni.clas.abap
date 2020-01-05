@@ -1,33 +1,44 @@
-class ZTC_LAC_SHOP_IB_MONI definition
-  public
-  abstract
-  create public
-  for testing
-  duration short
-  risk level harmless .
+CLASS ztc_lac_shop_ib_moni DEFINITION
+  PUBLIC
+  ABSTRACT
+  CREATE PUBLIC
+  FOR TESTING
+  DURATION SHORT
+  RISK LEVEL HARMLESS .
 
-public section.
+  PUBLIC SECTION.
 
-  methods CONSTRUCTOR_OK
-  for testing .
-  methods FINALIZE_OK
-  for testing .
-  methods INITIALIZE_OK
-  for testing .
-  methods RAISE_MODIFY_OBJECT_ATTR_FAIL
-  for testing .
-  methods RAISE_SALV_MSG_FAIL
-  for testing .
-  methods RAISE_SCREEN_CREATION_FAIL
-  for testing .
-protected section.
-private section.
+    METHODS constructor_ok
+        FOR TESTING .
+    METHODS finalize_ok
+        FOR TESTING .
+    METHODS initialize_ok
+          FOR TESTING
+      RAISING
+        cx_salv_error
+        zcx_lac_obj_creation .
+    METHODS create_screen_fail
+          FOR TESTING
+      RAISING
+        zcx_lac_obj_creation .
+    METHODS create_header_section_fail
+          FOR TESTING
+      RAISING
+        zcx_lac_obj_creation
+        cx_salv_error .
+    METHODS create_item_section_fail
+          FOR TESTING
+      RAISING
+        zcx_lac_obj_creation
+        cx_salv_error .
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 
-  data MO_IB_MONITOR type ref to ZCL_LAC_SHOP_IB_MONI .
-  data MO_SCREEN_HELPER_DOUBLE type ref to ZTD_LAC_SHOP_IB_MONI_HELPER .
-  data MO_SALV_WRAP_DOUBLE type ref to ZTD_LAC_SALV_WRAP .
+    DATA mo_ib_monitor TYPE REF TO zcl_lac_shop_ib_moni .
+    DATA mo_screen_helper_double TYPE REF TO zif_lac_shop_moni_helper .
+    DATA mo_salv_wrap_double TYPE REF TO zif_lac_salv_wrap .
 
-  methods SETUP .
+    METHODS setup .
 ENDCLASS.
 
 
@@ -35,7 +46,7 @@ ENDCLASS.
 CLASS ZTC_LAC_SHOP_IB_MONI IMPLEMENTATION.
 
 
-  METHOD CONSTRUCTOR_OK.
+  METHOD constructor_ok.
 
     CLEAR mo_ib_monitor.
 
@@ -46,79 +57,172 @@ CLASS ZTC_LAC_SHOP_IB_MONI IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD FINALIZE_OK.
+  METHOD create_header_section_fail.
+
+    DATA: lx_salv_error TYPE REF TO cx_salv_error,
+          lo_splitter   TYPE REF TO cl_gui_splitter_container ##NEEDED,
+          lo_container  TYPE REF TO cl_gui_container ##NEEDED.
+
+*   configure CREATE_SCREEN_SPLITTER
+    cl_abap_testdouble=>configure_call( mo_screen_helper_double
+      )->returning( lo_splitter ).
+
+    mo_screen_helper_double->create_screen_splitter( ).
+
+*   configure CREATE_SCREEN_CONTAINER
+    cl_abap_testdouble=>configure_call( mo_screen_helper_double
+      )->returning( lo_container ).
+
+    mo_screen_helper_double->create_screen_container(
+      io_splitter = lo_splitter
+      iv_row      = 1
+      iv_height   = 1 ).
+
+*   configure CREATE_SALV_CONTAINER
+    CREATE OBJECT lx_salv_error.
+    cl_abap_testdouble=>configure_call( mo_screen_helper_double
+      )->raise_exception( lx_salv_error ).
+
+    mo_screen_helper_double->create_salv_container(
+      io_container = lo_container
+      it_data      = VALUE zlac_shop_ib_moni_hdr_disp_tab( )
+    ).
+
+    TRY .
+        mo_ib_monitor->initialize( ).
+        cl_aunit_assert=>fail( 'Test has ended unexpectedly' ).
+
+      CATCH zcx_lac ##NO_HANDLER.
+    ENDTRY.
+
+  ENDMETHOD.
+
+
+  METHOD create_item_section_fail.
+
+    DATA: lx_salv_error TYPE REF TO cx_salv_error,
+          lo_splitter   TYPE REF TO cl_gui_splitter_container ##NEEDED,
+          lo_container  TYPE REF TO cl_gui_container ##NEEDED.
+
+*   configure CREATE_SCREEN_SPLITTER
+    cl_abap_testdouble=>configure_call( mo_screen_helper_double
+      )->returning( lo_splitter ).
+
+    mo_screen_helper_double->create_screen_splitter( ).
+
+*   configure CREATE_SCREEN_CONTAINER
+    cl_abap_testdouble=>configure_call( mo_screen_helper_double
+      )->returning( lo_container ).
+
+    mo_screen_helper_double->create_screen_container(
+      io_splitter = lo_splitter
+      iv_row      = 1
+      iv_height   = 1 ).
+
+*   configure CREATE_SALV_CONTAINER
+    cl_abap_testdouble=>configure_call( mo_screen_helper_double ).
+
+    mo_screen_helper_double->create_salv_container(
+      io_container = lo_container
+      it_data      = VALUE zlac_shop_ib_moni_hdr_disp_tab( )
+    ).
+
+*   configure CREATE_SALV_CONTAINER
+    CREATE OBJECT lx_salv_error.
+    cl_abap_testdouble=>configure_call( mo_screen_helper_double
+      )->raise_exception( lx_salv_error ).
+
+    mo_screen_helper_double->create_salv_container(
+      io_container = lo_container
+      it_data      = VALUE zlac_shop_ib_moni_hdr_disp_tab( )
+    ).
+
+    TRY .
+        mo_ib_monitor->initialize( ).
+        cl_aunit_assert=>fail( 'Test has ended unexpectedly' ).
+
+      CATCH zcx_lac ##NO_HANDLER.
+    ENDTRY.
+
+  ENDMETHOD.
+
+
+  METHOD create_screen_fail.
+
+    DATA lx_lac_obj_creation TYPE REF TO zcx_lac_obj_creation.
+
+    CREATE OBJECT lx_lac_obj_creation.
+
+*   configure CREATE_SCREEN_CONTAINER
+    cl_abap_testdouble=>configure_call( mo_screen_helper_double
+      )->raise_exception( lx_lac_obj_creation ).
+
+    mo_screen_helper_double->create_screen_splitter( ).
+
+    TRY .
+        mo_ib_monitor->initialize( ).
+        cl_aunit_assert=>fail( 'Test has ended unexpectedly' ).
+
+      CATCH zcx_lac ##NO_HANDLER.
+    ENDTRY.
+
+  ENDMETHOD.
+
+
+  METHOD finalize_ok.
 
     mo_ib_monitor->finalize( ).
 
   ENDMETHOD.
 
 
-  METHOD INITIALIZE_OK.
+  METHOD initialize_ok.
 
-    TRY .
-        mo_ib_monitor->initialize( ).
+    DATA: lo_splitter  TYPE REF TO cl_gui_splitter_container ##NEEDED,
+          lo_container TYPE REF TO cl_gui_container ##NEEDED.
 
-      CATCH cx_static_check.
-        cl_aunit_assert=>fail( 'An exception was thrown during runtime' ).
-    ENDTRY.
+*   configure CREATE_SCREEN_SPLITTER
+    cl_abap_testdouble=>configure_call( mo_screen_helper_double
+      )->returning( lo_splitter ).
 
-    cl_aunit_assert=>assert_equals(
-      act = mo_salv_wrap_double->mv_display_spy
-      exp = abap_true
+    mo_screen_helper_double->create_screen_splitter( ).
+
+*   configure CREATE_SCREEN_CONTAINER
+    cl_abap_testdouble=>configure_call( mo_screen_helper_double
+      )->returning( lo_container ).
+
+    mo_screen_helper_double->create_screen_container(
+      io_splitter = lo_splitter
+      iv_row      = 1
+      iv_height   = 1 ).
+
+*   configure CREATE_SALV_CONTAINER
+    cl_abap_testdouble=>configure_call( mo_screen_helper_double )->times( 2 ).
+
+    mo_screen_helper_double->create_salv_container(
+      io_container = lo_container
+      it_data      = VALUE zlac_shop_ib_moni_hdr_disp_tab( )
     ).
 
-  ENDMETHOD.
-
-
-  METHOD raise_modify_object_attr_fail.
-
-    mo_screen_helper_double->mv_raise_modify_object_attr = abap_true.
-
     TRY .
         mo_ib_monitor->initialize( ).
+
+        cl_abap_testdouble=>verify_expectations( mo_screen_helper_double ).
+
+      CATCH zcx_lac.
         cl_aunit_assert=>fail( 'Test has ended unexpectedly' ).
-      CATCH cx_static_check ##NO_HANDLER.
     ENDTRY.
-
-    cl_aunit_assert=>assert_initial( mo_salv_wrap_double->mv_display_spy ).
-
-  ENDMETHOD.
-
-
-  METHOD raise_salv_msg_fail.
-
-    mo_screen_helper_double->mv_raise_salv_msg = abap_true.
-
-    TRY .
-        mo_ib_monitor->initialize( ).
-        cl_aunit_assert=>fail( 'Test has ended unexpectedly' ).
-      CATCH cx_static_check ##NO_HANDLER.
-    ENDTRY.
-
-    cl_aunit_assert=>assert_initial( mo_salv_wrap_double->mv_display_spy ).
-
-  ENDMETHOD.
-
-
-  METHOD raise_screen_creation_fail.
-
-    mo_screen_helper_double->mv_raise_object_creation = abap_true.
-
-    TRY .
-        mo_ib_monitor->initialize( ).
-        cl_aunit_assert=>fail( 'Test has ended unexpectedly' ).
-      CATCH cx_static_check ##NO_HANDLER.
-    ENDTRY.
-
-    cl_aunit_assert=>assert_initial( mo_salv_wrap_double->mv_display_spy ).
 
   ENDMETHOD.
 
 
   METHOD setup.
 
-    CREATE OBJECT mo_screen_helper_double.
-    CREATE OBJECT mo_salv_wrap_double TYPE ztd_lac_salv_wrap.
+    CONSTANTS: lc_moni_helper TYPE seoclsname VALUE 'ZIF_LAC_SHOP_MONI_HELPER',
+               lc_salv_wrap   TYPE seoclsname VALUE 'ZIF_LAC_SALV_WRAP'.
+
+    mo_screen_helper_double ?= cl_abap_testdouble=>create( lc_moni_helper ).
+    mo_salv_wrap_double     ?= cl_abap_testdouble=>create( lc_salv_wrap ).
 
     CREATE OBJECT mo_ib_monitor
       EXPORTING
