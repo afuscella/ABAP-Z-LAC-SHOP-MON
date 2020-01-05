@@ -190,15 +190,15 @@
     <TIT>
      <RSMPE_TITT>
       <CODE>0100</CODE>
-      <TEXT>Shopping Cart Monitor</TEXT>
+      <TEXT>Shopping Cart Inbound Monitor</TEXT>
      </RSMPE_TITT>
     </TIT>
    </CUA>
    <TPOOL>
     <item>
      <ID>R</ID>
-     <ENTRY>Shopping Cart Monitor</ENTRY>
-     <LENGTH>22</LENGTH>
+     <ENTRY>Shopping Cart Inbound Monitor</ENTRY>
+     <LENGTH>29</LENGTH>
     </item>
    </TPOOL>
   </asx:values>
