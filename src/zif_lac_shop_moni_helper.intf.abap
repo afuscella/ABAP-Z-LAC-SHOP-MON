@@ -19,7 +19,10 @@ interface ZIF_LAC_SHOP_MONI_HELPER
       !IO_CONTAINER type ref to CL_GUI_CONTAINER
       !IT_DATA type STANDARD TABLE
     returning
-      value(RO_SALV_TABLE) type ref to CL_SALV_TABLE
+      value(RS_SALV_RETURN) type ZLAC_SALV_RETURN
     raising
       CX_SALV_ERROR .
+  methods DISPLAY_SCREEN
+    importing
+      !IO_GRID type ZLAC_SALV_RETURN .
 endinterface.
