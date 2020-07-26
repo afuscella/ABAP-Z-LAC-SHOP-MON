@@ -7,6 +7,7 @@ REPORT zlac_shop_inbound_monitor.
 
 INCLUDE zlac_shop_ib_monitor_0100o01.
 INCLUDE zlac_shop_ib_monitor_0100i01.
+INCLUDE zlac_shop_ib_monitor_test.
 
 CLASS lcl_main DEFINITION FINAL.
   PUBLIC SECTION.

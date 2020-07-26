@@ -41,18 +41,19 @@ CLASS ZCL_LAC_SHOP_IB_MONI_HELPER IMPLEMENTATION.
 
   METHOD zif_lac_shop_moni_helper~create_salv_container.
 
-    DATA lv_download TYPE string.
+    DATA: lo_salv_table TYPE zlac_salv_return,
+          lv_download   TYPE string.
 
     lv_download = TEXT-s00.
 
-    ro_salv_table = mo_salv_wrap->create_salv_table(
+    lo_salv_table = mo_salv_wrap->create_salv_table(
       io_container = io_container
       it_data      = it_data ).
 
-    mo_salv_wrap->set_default_functions( ro_salv_table ).
+    mo_salv_wrap->set_default_functions( lo_salv_table-salv ).
 
     mo_salv_wrap->add_function(
-      io_salv     = ro_salv_table
+      io_salv     = lo_salv_table-salv
       iv_name     = 'BUTTON'
       iv_icon     = '@FT@'
       iv_text     = lv_download
@@ -60,9 +61,12 @@ CLASS ZCL_LAC_SHOP_IB_MONI_HELPER IMPLEMENTATION.
       iv_position = if_salv_c_function_position=>right_of_salv_functions
     ).
 
-    mo_salv_wrap->set_optimize_columns( ro_salv_table ).
+    mo_salv_wrap->set_optimize_columns( lo_salv_table-salv ).
 
-    mo_salv_wrap->display( ro_salv_table ).
+    rs_salv_return = VALUE #(
+      salv = lo_salv_table-salv
+      data = lo_salv_table-data
+    ).
 
   ENDMETHOD.
 
@@ -94,6 +98,13 @@ CLASS ZCL_LAC_SHOP_IB_MONI_HELPER IMPLEMENTATION.
       iv_rows    = 2
       iv_columns = 1
     ).
+
+  ENDMETHOD.
+
+
+  METHOD zif_lac_shop_moni_helper~display_screen.
+
+    io_grid-salv->display( ).
 
   ENDMETHOD.
 ENDCLASS.

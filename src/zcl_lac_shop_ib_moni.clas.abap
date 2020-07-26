@@ -55,8 +55,8 @@ CLASS ZCL_LAC_SHOP_IB_MONI IMPLEMENTATION.
 
   METHOD create_header_section.
 
-    DATA: lo_header_container TYPE REF TO cl_gui_container,
-          lo_header_salv      TYPE REF TO cl_salv_table ##NEEDED,
+    DATA: lo_header_grid      TYPE zlac_salv_return,
+          lo_header_container TYPE REF TO cl_gui_container,
           lt_header_display   TYPE zlac_shop_ib_moni_hdr_disp_tab.
 
     lo_header_container = mo_screen_helper->create_screen_container(
@@ -65,18 +65,20 @@ CLASS ZCL_LAC_SHOP_IB_MONI IMPLEMENTATION.
       iv_height   = 80 ##NUMBER_OK
     ).
 
-    lo_header_salv = mo_screen_helper->create_salv_container(
+    lo_header_grid = mo_screen_helper->create_salv_container(
       io_container = lo_header_container
       it_data      = lt_header_display
     ).
+
+    mo_screen_helper->display_screen( lo_header_grid ).
 
   ENDMETHOD.
 
 
   METHOD create_items_section.
 
-    DATA: lo_items_container TYPE REF TO cl_gui_container,
-          lo_items_salv      TYPE REF TO cl_salv_table ##NEEDED,
+    DATA: lo_items_grid      TYPE zlac_salv_return,
+          lo_items_container TYPE REF TO cl_gui_container,
           lt_items_display   TYPE zlac_shop_ib_moni_hdr_disp_tab.
 
     lo_items_container = mo_screen_helper->create_screen_container(
@@ -85,10 +87,12 @@ CLASS ZCL_LAC_SHOP_IB_MONI IMPLEMENTATION.
       iv_height   = 20 ##NUMBER_OK
     ).
 
-    lo_items_salv = mo_screen_helper->create_salv_container(
+    lo_items_grid = mo_screen_helper->create_salv_container(
       io_container = lo_items_container
       it_data      = lt_items_display
     ).
+
+    mo_screen_helper->display_screen( lo_items_grid ).
 
   ENDMETHOD.
 
